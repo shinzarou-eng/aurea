@@ -1,6 +1,8 @@
 import { Globe, Info, Key, Download, History, Command, Github } from "lucide-react";
 import { useState } from "react";
 import { EngineConfig } from "../types";
+// @ts-ignore
+import logo from "/aurea-icon.svg?url";
 
 interface HeaderProps {
   language: "fr" | "en";
@@ -44,7 +46,7 @@ export default function Header({
         {/* Brand */}
         <div className="flex items-center gap-3">
           <img
-            src="/aurea-icon.svg"
+            src={logo}
             alt="Aurea"
             className="w-8 h-8 rounded-lg object-cover"
           />

@@ -12,3 +12,6 @@ coverage/
 bun.lock
 metadata.json
 aurea-*.png
+gh_logs/
+logs.zip
+screenshots/
