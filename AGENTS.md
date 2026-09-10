@@ -1,4 +1,4 @@
-# AGENTS.md — Aurea
+# ReadmeFR.md — Aurea
 
 ## Projet
 
