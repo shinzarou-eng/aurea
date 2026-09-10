@@ -340,7 +340,7 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="grow max-w-[1400px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-16">
+      <main className="grow max-w-[1400px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-14 lg:py-20">
         {/* Page Header */}
         <div className="mb-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
           <div>

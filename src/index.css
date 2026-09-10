@@ -2,14 +2,14 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg: #f5f4f1;
-  --color-surface: #fbfaf8;
-  --color-surface-elevated: #ffffff;
-  --color-border: #e5e2dc;
-  --color-border-strong: #d4d0c8;
-  --color-text: #242321;
-  --color-text-muted: #76736d;
-  --color-text-subtle: #a39f97;
+  --color-bg: #f3f1ed;
+  --color-surface: #f8f7f3;
+  --color-surface-elevated: #fffdfa;
+  --color-border: #e1ddd5;
+  --color-border-strong: #cfc8be;
+  --color-text: #201f1d;
+  --color-text-muted: #6f6b64;
+  --color-text-subtle: #969087;
   --color-primary: #292827;
   --color-primary-hover: #45423e;
   --color-accent: #b36b45;
@@ -18,9 +18,9 @@
   --color-error: #b85f59;
   --radius: 0.75rem;
   --radius-lg: 1rem;
-  --shadow-sm: 0 1px 2px rgba(36, 35, 33, 0.04);
-  --shadow-md: 0 8px 20px rgba(36, 35, 33, 0.06);
-  --shadow-lg: 0 18px 45px rgba(36, 35, 33, 0.09);
+  --shadow-sm: 0 1px 2px rgba(36, 35, 33, 0.035), 0 4px 12px rgba(36, 35, 33, 0.025);
+  --shadow-md: 0 10px 24px rgba(36, 35, 33, 0.055), 0 2px 5px rgba(36, 35, 33, 0.025);
+  --shadow-lg: 0 22px 55px rgba(36, 35, 33, 0.095), 0 4px 12px rgba(36, 35, 33, 0.035);
 }
 
 @theme inline {

@@ -173,10 +173,10 @@ export default function UploadSection({
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`group relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
+            className={`group relative border border-dashed rounded-[1.1rem] p-8 text-center cursor-pointer transition-all ${
               isDragging
-                ? "border-slate-900 bg-slate-50"
-                : "border-slate-300 hover:border-slate-500 bg-slate-50/50 hover:bg-slate-50"
+                ? "border-[var(--color-accent)] bg-[var(--color-accent-soft)]"
+                : "border-slate-300 hover:border-[var(--color-accent)] bg-slate-50/50 hover:bg-[var(--color-accent-soft)]"
             }`}
           >
             <input
