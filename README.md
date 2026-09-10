@@ -1,6 +1,6 @@
 # Aurea
 
-Aurea is a professional launch studio for mobile and web applications.
+Aurea is a professional launch studio for mobile and web applications. Built with Vite + React + TypeScript + Tailwind CSS.
 
 **GitHub:** [github.com/shinzarou-eng](https://github.com/shinzarou-eng)
 
