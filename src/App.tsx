@@ -342,14 +342,20 @@ export default function App() {
       {/* Main Container */}
       <main className="grow max-w-[1400px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-16">
         {/* Page Header */}
-        <div className="mb-12 max-w-3xl">
-          <div className="mb-4 flex items-center gap-3"><span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent)]">AUREA / LAUNCH STUDIO</span><span className="h-px w-12 bg-[var(--color-accent)]/40" /></div>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-[var(--color-text)] tracking-tight leading-[1.05]">
-            Lancez votre application avec clarté
-          </h1>
-          <p className="text-base text-slate-500 mt-3 max-w-3xl leading-relaxed">
-            Importez les captures d'écran et le dossier de votre app. Aurea produit un kit de lancement complet et un audit technique en quelques secondes.
-          </p>
+        <div className="mb-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+          <div>
+            <div className="mb-5 flex items-center gap-3"><span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent)]">AUREA / LAUNCH STUDIO</span><span className="h-px w-12 bg-[var(--color-accent)]/40" /></div>
+            <h1 className="max-w-4xl font-serif text-5xl sm:text-6xl lg:text-[5.3rem] font-normal text-[var(--color-text)] tracking-tight leading-[0.98]">
+              Lancez votre application avec clarté
+            </h1>
+            <p className="text-base text-slate-500 mt-6 max-w-2xl leading-relaxed">
+              Transformez vos écrans en une stratégie de lancement précise, lisible et prête à exécuter.
+            </p>
+          </div>
+          <div className="hidden lg:block border-l border-[var(--color-border-strong)] pl-5 pb-1">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">Ce que vous obtenez</p>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">Positionnement, messages, acquisition et feuille de route réunis dans un seul espace de travail.</p>
+          </div>
         </div>
 
         {/* Upload & Configuration Section */}

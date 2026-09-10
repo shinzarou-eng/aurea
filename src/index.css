@@ -97,4 +97,10 @@ main > div:first-child h1 { letter-spacing: -0.045em; }
 main > div:first-child p { color: var(--color-text-muted); }
 section, [id^="section-"] { scroll-margin-top: 7.5rem; }
 
+input, select, textarea { transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
+input:focus, select:focus, textarea:focus { border-color: var(--color-accent) !important; box-shadow: 0 0 0 4px rgba(179, 107, 69, .12) !important; }
+button { transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease; }
+button:not(:disabled):hover { transform: translateY(-1px); }
+
+
 @supports (text-wrap: balance) { h1, h2, h3 { text-wrap: balance; } }
