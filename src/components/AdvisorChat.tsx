@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { MessageSquare, X, Send, Minimize2, Maximize2, Copy, Check } from "lucide-react";
 import Markdown from "react-markdown";
 import { EngineConfig, MarketingSession } from "../types";
+import { parseApiResponse } from "../utils/parseApiResponse";
 
 interface Message {
   id: string;
@@ -116,7 +117,7 @@ export default function AdvisorChat({
         }),
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Erreur de contact avec le moteur.");
       }

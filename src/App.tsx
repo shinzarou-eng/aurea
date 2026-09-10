@@ -32,6 +32,7 @@ import ProjectFolderUpload from "./components/ProjectFolderUpload";
 import ProjectAuditSection from "./components/ProjectAuditSection";
 import ProjectTestResults from "./components/ProjectTestResults";
 import { saveSessionToHistory } from "./utils/sessionHistory";
+import { parseApiResponse } from "./utils/parseApiResponse";
 import { UploadedImage, MarketingSession, EngineConfig, ProjectFile, ProjectAudit, ProjectTestResult } from "./types";
 import { SimulatorGrowthInputs } from "./utils/okrDefaults";
 import { PRESET_APPS } from "./data/presets";
@@ -149,7 +150,7 @@ export default function App() {
       clearTimeout(timer1);
       clearTimeout(timer2);
 
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Échec de l'analyse marketing.");
       }
@@ -279,7 +280,7 @@ export default function App() {
           engineConfig,
         }),
       });
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Échec de l'audit projet.");
       }
@@ -306,7 +307,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ files }),
       });
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Échec des tests projet.");
       }

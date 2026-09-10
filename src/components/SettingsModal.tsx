@@ -15,6 +15,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { EngineConfig, EngineProviderType } from "../types";
+import { parseApiResponse } from "../utils/parseApiResponse";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -235,7 +236,7 @@ export default function SettingsModal({
           customEndpoint: customEndpoint.trim(),
         }),
       });
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (res.ok && data.success) {
         setTestResult({ success: true, message: data.message || "Clé API validée avec succès !" });
       } else {

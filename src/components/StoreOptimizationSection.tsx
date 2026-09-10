@@ -13,6 +13,7 @@ import {
   RefreshCw 
 } from "lucide-react";
 import Markdown from "react-markdown";
+import { parseApiResponse } from "../utils/parseApiResponse";
 
 interface StoreOptimizationSectionProps {
   aso: AppStoreOptimization;
@@ -120,7 +121,7 @@ export default function StoreOptimizationSection({
           engineConfig,
         }),
       });
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (data.success && data.localized) {
         setLocalMap((prev) => ({ ...prev, [langCode]: data.localized }));
         if (onUpdateLocalizedAso) onUpdateLocalizedAso(langCode, data.localized);

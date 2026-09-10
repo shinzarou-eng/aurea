@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Markdown from "react-markdown";
 import { EngineConfig } from "../types";
+import { parseApiResponse } from "../utils/parseApiResponse";
 import { SMART_PROMPTS, SMART_PROMPT_CATEGORIES, SmartPrompt } from "../data/smartPrompts";
 
 interface RefineModalProps {
@@ -107,7 +108,7 @@ export default function RefineModal({
         }),
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Erreur lors de la révision");
       }
