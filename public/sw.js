@@ -1,10 +1,10 @@
 const CACHE_NAME = 'aurea-v1';
+const BASE = '/aurea/';
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/aurea-icon-192.png',
-  '/aurea-icon-512.png',
+  BASE,
+  `${BASE}index.html`,
+  `${BASE}manifest.json`,
+  `${BASE}aurea-icon.svg`,
 ];
 
 self.addEventListener('install', (event) => {
@@ -28,7 +28,7 @@ async function networkFirst(request) {
     const networkResponse = await fetch(request);
     if (networkResponse && networkResponse.status === 200) {
       const url = new URL(request.url);
-      if (url.origin === self.location.origin && !url.pathname.startsWith('/api/')) {
+      if (url.origin === self.location.origin && !url.pathname.startsWith(`${BASE}api/`)) {
         const cache = await caches.open(CACHE_NAME);
         cache.put(request, networkResponse.clone());
       }
