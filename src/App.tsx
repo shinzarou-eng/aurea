@@ -36,6 +36,7 @@ import { parseApiResponse } from "./utils/parseApiResponse";
 import { UploadedImage, MarketingSession, EngineConfig, ProjectFile, ProjectAudit, ProjectTestResult } from "./types";
 import { SimulatorGrowthInputs } from "./utils/okrDefaults";
 import { PRESET_APPS } from "./data/presets";
+import { DEMO_SESSION, DEMO_APP_NAME } from "./data/demoSession";
 import { generateMarketingMarkdown } from "./utils/exportMarkdown";
 import { Sparkles, ArrowUp, RefreshCw, FileText, Printer, CheckCircle2, Download } from "lucide-react";
 import confetti from "canvas-confetti";
@@ -131,32 +132,51 @@ export default function App() {
       const timer1 = setTimeout(() => setLoadingStep("Extraction de l'UX, des fonctionnalités et des couleurs..."), 2000);
       const timer2 = setTimeout(() => setLoadingStep("Rédaction des fiches App Store, posts et angles publicitaires..."), 4500);
 
-      const payload = {
-        images: images.map((img) => ({ data: img.dataUrl })),
-        appName,
-        targetAudience,
-        tone,
-        pricingModel,
-        language,
-        engineConfig,
-      };
+      if (import.meta.env.PROD) {
+        await new Promise((resolve) => setTimeout(resolve, 2800));
+        const demoName = appName.trim() || DEMO_APP_NAME;
+        const demoSession: MarketingSession = {
+          ...DEMO_SESSION,
+          appOverview: {
+            ...DEMO_SESSION.appOverview,
+            detectedName: demoName,
+            uniqueValueProposition: demoName === DEMO_APP_NAME
+              ? DEMO_SESSION.appOverview.uniqueValueProposition
+              : `${demoName} simplifie votre quotidien avec une expérience fluide, personnelle et sans friction.`,
+          },
+        };
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        setSession(demoSession);
+        saveSessionToHistory(demoSession, demoName);
+      } else {
+        const payload = {
+          images: images.map((img) => ({ data: img.dataUrl })),
+          appName,
+          targetAudience,
+          tone,
+          pricingModel,
+          language,
+          engineConfig,
+        };
 
-      const res = await fetch("/api/marketing/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+        const res = await fetch("/api/marketing/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-      clearTimeout(timer1);
-      clearTimeout(timer2);
+        clearTimeout(timer1);
+        clearTimeout(timer2);
 
-      const data = await parseApiResponse(res);
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Échec de l'analyse marketing.");
+        const data = await parseApiResponse(res);
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || "Échec de l'analyse marketing.");
+        }
+
+        setSession(data.session);
+        saveSessionToHistory(data.session, appName);
       }
-
-      setSession(data.session);
-      saveSessionToHistory(data.session, appName);
 
       // Scroll to dashboard smoothly
       setTimeout(() => {
