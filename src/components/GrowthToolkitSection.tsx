@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Wand2, Copy, Check, Rocket, Calendar, Newspaper, Briefcase, Loader2 } from "lucide-react";
 import Markdown from "react-markdown";
 import { EngineConfig, MarketingSession } from "../types";
+import { parseApiResponse } from "../utils/parseApiResponse";
 
 interface GrowthToolkitSectionProps {
   session: MarketingSession;
@@ -88,7 +89,7 @@ export default function GrowthToolkitSection({
         }),
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Erreur de production.");
       }

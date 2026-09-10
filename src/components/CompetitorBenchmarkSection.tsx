@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CompetitorAnalysis, MarketingSession, EngineConfig } from "../types";
 import { generateDefaultCompetitors } from "../utils/competitorDefaults";
+import { parseApiResponse } from "../utils/parseApiResponse";
 import { 
   ShieldAlert, 
   Swords, 
@@ -57,7 +58,7 @@ export default function CompetitorBenchmarkSection({
           engineConfig,
         }),
       });
-      const data = await res.json();
+      const data = await parseApiResponse(res);
       if (data.success && data.competitorAnalysis && onUpdateCompetitors) {
         onUpdateCompetitors(data.competitorAnalysis);
       }
