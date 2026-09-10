@@ -325,7 +325,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] text-slate-900 flex flex-col font-sans selection:bg-slate-200 selection:text-slate-900">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex flex-col font-sans">
       {/* Top Navigation */}
       <Header
         language={language}
@@ -340,10 +340,11 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main className="grow max-w-[1400px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-16">
         {/* Page Header */}
-        <div className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+        <div className="mb-12 max-w-3xl">
+          <div className="mb-4 flex items-center gap-3"><span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent)]">AUREA / LAUNCH STUDIO</span><span className="h-px w-12 bg-[var(--color-accent)]/40" /></div>
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-[var(--color-text)] tracking-tight leading-[1.05]">
             Lancez votre application avec clarté
           </h1>
           <p className="text-base text-slate-500 mt-3 max-w-3xl leading-relaxed">

@@ -41,7 +41,7 @@ export default function Header({
   }[engineConfig.provider] || "Google";
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[var(--color-border)]">
+    <header className="sticky top-0 z-40 bg-[var(--color-bg)]/95 backdrop-blur-xl border-b border-[var(--color-border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3">
@@ -51,7 +51,7 @@ export default function Header({
             className="w-8 h-8 rounded-lg object-cover"
           />
           <div className="flex items-baseline gap-3">
-            <span className="font-bold text-slate-900 text-lg tracking-tight">Aurea</span>
+            <span className="font-serif text-[1.45rem] text-[var(--color-text)] tracking-tight">Aurea</span>
             <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 bg-slate-50 border border-slate-200 rounded-full px-2.5 py-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               {engineConfig.apiKey ? `Connecté • ${providerLabel}` : `Moteur • ${providerLabel}`}
