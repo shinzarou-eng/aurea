@@ -1,66 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --color-bg: #f8f9fb;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #ffffff;
-  --color-border: #e9eef3;
-  --color-border-strong: #dfe4eb;
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
-  --color-text-subtle: #94a3b8;
-  --color-primary: #0f172a;
-  --color-primary-hover: #1e293b;
-  --color-accent: #bfa05f;
-  --color-accent-soft: #f4efe6;
-  --color-success: #10b981;
-  --color-error: #ef4444;
-  --radius: 1rem;
-  --radius-lg: 1.25rem;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.02);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
-  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
+  --color-bg: #f3f1ed;
+  --color-surface: #f8f7f3;
+  --color-surface-elevated: #fffdfa;
+  --color-border: #e1ddd5;
+  --color-border-strong: #cfc8be;
+  --color-text: #201f1d;
+  --color-text-muted: #6f6b64;
+  --color-text-subtle: #969087;
+  --color-primary: #292827;
+  --color-primary-hover: #45423e;
+  --color-accent: #b36b45;
+  --color-accent-soft: #f2e5dc;
+  --color-success: #597965;
+  --color-error: #b85f59;
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-sm: 0 1px 2px rgba(36, 35, 33, 0.035), 0 4px 12px rgba(36, 35, 33, 0.025);
+  --shadow-md: 0 10px 24px rgba(36, 35, 33, 0.055), 0 2px 5px rgba(36, 35, 33, 0.025);
+  --shadow-lg: 0 22px 55px rgba(36, 35, 33, 0.095), 0 4px 12px rgba(36, 35, 33, 0.035);
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-mono: "IBM Plex Mono", monospace;
 }
 
 html {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background: var(--color-bg);
   color: var(--color-text);
 }
 
-body {
-  background: var(--color-bg);
-}
+body { background: var(--color-bg); }
+* { border-color: var(--color-border); }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
 
-* {
-  border-color: var(--color-border);
-}
-
-/* Custom subtle scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c9c5bd; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa59b; }
 
 @media print {
-  header, #btn-start-marketing-session, .fixed, .no-print {
-    display: none !important;
-  }
-  body {
-    background: white !important;
-    color: black !important;
-  }
+  header, #btn-start-marketing-session, .fixed, .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
 }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fadeIn { animation: fadeIn 420ms ease-out both; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+::selection { background: #ead8cc; color: #292827; }
+
+/* Quiet surfaces keep the workspace focused on the work, not the chrome. */
+.bg-white { background-color: var(--color-surface-elevated); }
+.bg-slate-50, .bg-slate-50\/50, .bg-slate-50\/70 { background-color: #f8f7f4; }
+.border-slate-100, .border-slate-200, .border-slate-200\/80 { border-color: var(--color-border); }
+.text-slate-900, .text-slate-800 { color: var(--color-text); }
+.text-slate-700, .text-slate-600 { color: #5f5b55; }
+.text-slate-500, .text-slate-400 { color: var(--color-text-muted); }
+.bg-slate-900 { background-color: var(--color-primary); }
+.hover\:bg-slate-800:hover { background-color: var(--color-primary-hover); }
+.bg-emerald-600 { background-color: var(--color-accent); }
+.hover\:bg-emerald-500:hover { background-color: #9c5b3c; }
+.text-emerald-600, .text-emerald-700 { color: var(--color-accent); }
+.bg-emerald-50 { background-color: var(--color-accent-soft); }
+.text-emerald-800 { color: #795039; }
+.rounded-2xl { border-radius: var(--radius-lg); }
+.shadow-sm, .shadow-xs, .shadow-2xs { box-shadow: var(--shadow-sm); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+@media (max-width: 640px) { .rounded-2xl { border-radius: .8rem; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+.font-serif { font-family: "DM Serif Display", Georgia, serif; }
+.font-mono { font-family: "IBM Plex Mono", monospace; }
+
+.dark { color-scheme: light; }
+html, body, #root { min-height: 100%; }
+body { margin: 0; }
+
+@media (max-width: 768px) {
+  main { padding-top: 2rem !important; }
+}
+
+@media print { .bg-slate-900 { background: white !important; color: black !important; } }
+
+/* Ensure the application has a consistent editorial rhythm. */
+main > div:first-child h1 { letter-spacing: -0.045em; }
+main > div:first-child p { color: var(--color-text-muted); }
+section, [id^="section-"] { scroll-margin-top: 7.5rem; }
+
+input, select, textarea { transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
+input:focus, select:focus, textarea:focus { border-color: var(--color-accent) !important; box-shadow: 0 0 0 4px rgba(179, 107, 69, .12) !important; }
+button { transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease; }
+button:not(:disabled):hover { transform: translateY(-1px); }
+
+
+@supports (text-wrap: balance) { h1, h2, h3 { text-wrap: balance; } }

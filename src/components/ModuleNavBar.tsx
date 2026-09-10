@@ -59,7 +59,7 @@ export default function ModuleNavBar({ activeSection }: ModuleNavBarProps) {
   };
 
   return (
-    <div className="sticky top-16 z-30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-2.5 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xs mb-6 transition-all">
+    <div className="sticky top-16 z-30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-[var(--color-bg)]/95 backdrop-blur-xl border-b border-[var(--color-border)] mb-8 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1">
         <div className="flex items-center space-x-1.5 shrink-0">
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1 hidden md:inline">
@@ -71,7 +71,7 @@ export default function ModuleNavBar({ activeSection }: ModuleNavBarProps) {
               <button
                 key={mod.id}
                 onClick={() => scrollTo(mod.id)}
-                className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
+                className={`text-[11px] font-semibold px-3 py-2 rounded-lg border transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                   activeSection === mod.id
                     ? "bg-slate-900 text-white border-slate-900 shadow-xs"
                     : "bg-white hover:bg-slate-100/80 text-slate-600 border-slate-200/80 hover:border-slate-300"

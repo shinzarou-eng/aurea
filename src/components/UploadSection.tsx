@@ -153,11 +153,12 @@ export default function UploadSection({
   }[engineConfig.provider] || `Google (${engineConfig.model || "gemini-3.8-flash"})`;
 
   return (
-    <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-sm p-6 sm:p-8 mb-8">
+    <div className="bg-[var(--color-surface-elevated)] rounded-[1.25rem] border border-[var(--color-border)] shadow-[var(--shadow-md)] p-6 sm:p-8 mb-10">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Left column: upload + context + action */}
         <div className="lg:col-span-3 space-y-6">
           <div>
+            <div className="flex items-center gap-2 mb-2"><span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">01 / INPUT</span><span className="h-px w-8 bg-[var(--color-border-strong)]" /></div>
             <h2 className="text-lg sm:text-xl font-semibold text-slate-900 tracking-tight">
               Photos & captures d'écran
             </h2>
@@ -172,10 +173,10 @@ export default function UploadSection({
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`group relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
+            className={`group relative border border-dashed rounded-[1.1rem] p-8 text-center cursor-pointer transition-all ${
               isDragging
-                ? "border-slate-900 bg-slate-50"
-                : "border-slate-300 hover:border-slate-500 bg-slate-50/50 hover:bg-slate-50"
+                ? "border-[var(--color-accent)] bg-[var(--color-accent-soft)]"
+                : "border-slate-300 hover:border-[var(--color-accent)] bg-slate-50/50 hover:bg-[var(--color-accent-soft)]"
             }`}
           >
             <input

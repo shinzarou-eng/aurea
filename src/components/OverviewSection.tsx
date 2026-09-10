@@ -17,12 +17,14 @@ export default function OverviewSection({ overview, onRefine }: OverviewSectionP
   };
 
   return (
-    <div id="section-overview" className="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 mb-8 scroll-mt-24">
+    <div id="section-overview" className="bg-[var(--color-surface-elevated)] rounded-[1.25rem] border border-[var(--color-border)] shadow-[var(--shadow-md)] p-6 sm:p-8 mb-10 scroll-mt-24">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-slate-100 mb-6">
         <div>
-          <div className="flex items-center space-x-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">02 / SIGNAL</span>
+            <span className="h-px w-8 bg-[var(--color-border-strong)]" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-subtle)]">
               Module 1
             </span>
             <h3 className="text-lg font-bold text-slate-900">Analyse de Marque & Positionnement</h3>
