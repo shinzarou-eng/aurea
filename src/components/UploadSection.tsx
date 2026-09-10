@@ -31,7 +31,95 @@ interface UploadSectionProps {
   onGenerate: () => void;
   engineConfig: EngineConfig;
   onOpenEngineSettings: () => void;
+  language: "fr" | "en";
 }
+
+const t = {
+  fr: {
+    eyebrow: "01 / INPUT",
+    title: "Photos & captures d'écran",
+    subtitle: "Jusqu'à 6 visuels de votre application. L'analyse porte sur le design, les flux et le concept.",
+    dropzone: "Glissez-déposez vos captures, ou ",
+    browse: "parcourez vos fichiers",
+    formats: "PNG, JPG, JPEG ou WebP · max 15 Mo par image",
+    examples: "Exemples :",
+    appName: "Nom de l'application",
+    appNamePlaceholder: "Ex: FitPulse Pro",
+    audience: "Audience cible",
+    audiencePlaceholder: "Sportifs, freelances, étudiants...",
+    tone: "Tonalité",
+    pricing: "Modèle économique",
+    engine: "Moteur actif",
+    configure: "Configurer",
+    errorTitle: "Une erreur est survenue",
+    cta: "Lancer la session marketing",
+    loading: "Analyse en cours...",
+    preview: "Aperçu",
+    previewEmpty: "Les captures importées apparaîtront ici pour un aperçu rapide.",
+    clear: "Tout effacer",
+    add: "Ajouter",
+    clickToZoom: "Cliquez pour agrandir",
+    zoom: "Agrandir",
+    remove: "Supprimer",
+    home: "Accueil",
+    screen: "Écran",
+    tones: {
+      "Dynamique & Inspirant": "Dynamique & Inspirant",
+      "Professionnel & Rassurant": "Professionnel & Rassurant",
+      "Audacieux & Disruptif": "Audacieux & Disruptif",
+      "Minimaliste & Zen": "Minimaliste & Zen",
+      "Accessible & Chaleureux": "Accessible & Chaleureux",
+    },
+    pricingOptions: {
+      "Freemium / In-App Purchases": "Freemium / Achats intégrés",
+      "Abonnement mensuel/annuel": "Abonnement (SaaS / App)",
+      "Application payante directe": "Payante au téléchargement",
+      "100% Gratuit / Open Source": "100% Gratuit",
+    },
+  },
+  en: {
+    eyebrow: "01 / INPUT",
+    title: "Photos & screenshots",
+    subtitle: "Up to 6 visuals of your app. The analysis focuses on design, flows, and concept.",
+    dropzone: "Drag and drop your screenshots, or ",
+    browse: "browse your files",
+    formats: "PNG, JPG, JPEG or WebP · max 15 MB per image",
+    examples: "Examples:",
+    appName: "App name",
+    appNamePlaceholder: "Ex: FitPulse Pro",
+    audience: "Target audience",
+    audiencePlaceholder: "Athletes, freelancers, students...",
+    tone: "Tone of voice",
+    pricing: "Business model",
+    engine: "Active engine",
+    configure: "Configure",
+    errorTitle: "An error occurred",
+    cta: "Launch marketing session",
+    loading: "Analysis in progress...",
+    preview: "Preview",
+    previewEmpty: "Uploaded captures will appear here for a quick preview.",
+    clear: "Clear all",
+    add: "Add",
+    clickToZoom: "Click to enlarge",
+    zoom: "Zoom",
+    remove: "Remove",
+    home: "Home",
+    screen: "Screen",
+    tones: {
+      "Dynamique & Inspirant": "Dynamic & Inspiring",
+      "Professionnel & Rassurant": "Professional & Reassuring",
+      "Audacieux & Disruptif": "Bold & Disruptive",
+      "Minimaliste & Zen": "Minimalist & Zen",
+      "Accessible & Chaleureux": "Friendly & Warm",
+    },
+    pricingOptions: {
+      "Freemium / In-App Purchases": "Freemium / In-App Purchases",
+      "Abonnement mensuel/annuel": "Subscription (SaaS / App)",
+      "Application payante directe": "Paid download",
+      "100% Gratuit / Open Source": "100% Free / Open Source",
+    },
+  },
+};
 
 export default function UploadSection({
   images,
@@ -50,6 +138,7 @@ export default function UploadSection({
   onGenerate,
   engineConfig,
   onOpenEngineSettings,
+  language,
 }: UploadSectionProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [modalImage, setModalImage] = useState<UploadedImage | null>(null);
@@ -84,7 +173,7 @@ export default function UploadSection({
         name: imageFiles[i].name,
         dataUrl,
         previewUrl: dataUrl,
-        tag: i === 0 ? "Accueil" : `Écran ${i + 1}`,
+        tag: i === 0 ? txt.home : `${txt.screen} ${i + 1}`,
         isPreset: false,
       }));
 
@@ -99,7 +188,7 @@ export default function UploadSection({
           ...prev,
           ...newImages.map((img, i) => ({
             ...img,
-            tag: `Écran ${prev.length + i + 1}`,
+            tag: `${txt.screen} ${prev.length + i + 1}`,
           })),
         ]);
       }
@@ -137,8 +226,10 @@ export default function UploadSection({
     setAppName(preset.name);
     setTargetAudience(preset.audience);
     setTone("Dynamique & Inspirant");
-    setPricingModel("Freemium / Abonnement");
+    setPricingModel("Freemium / In-App Purchases");
   };
+
+  const txt = t[language];
 
   const providerDisplay = {
     gemini: `Google (${engineConfig.model || "gemini-3.8-flash"})`,
@@ -158,12 +249,12 @@ export default function UploadSection({
         {/* Left column: upload + context + action */}
         <div className="lg:col-span-3 space-y-6">
           <div>
-            <div className="flex items-center gap-2 mb-2"><span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">01 / INPUT</span><span className="h-px w-8 bg-[var(--color-border-strong)]" /></div>
+            <div className="flex items-center gap-2 mb-2"><span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">{txt.eyebrow}</span><span className="h-px w-8 bg-[var(--color-border-strong)]" /></div>
             <h2 className="text-lg sm:text-xl font-semibold text-slate-900 tracking-tight">
-              Photos & captures d'écran
+              {txt.title}
             </h2>
             <p className="text-sm text-slate-500 mt-1">
-              Jusqu'à 6 visuels de votre application. L'analyse porte sur le design, les flux et le concept.
+              {txt.subtitle}
             </p>
           </div>
 
@@ -193,16 +284,16 @@ export default function UploadSection({
               </div>
               <div>
                 <p className="text-sm font-semibold text-slate-800">
-                  Glissez-déposez vos captures, ou <span className="underline decoration-slate-400 underline-offset-2">parcourez vos fichiers</span>
+                  {txt.dropzone}<span className="underline decoration-slate-400 underline-offset-2">{txt.browse}</span>
                 </p>
-                <p className="text-xs text-slate-400 mt-1">PNG, JPG, JPEG ou WebP · max 15 Mo par image</p>
+                <p className="text-xs text-slate-400 mt-1">{txt.formats}</p>
               </div>
             </div>
           </div>
 
           {/* Presets */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-slate-400">Exemples :</span>
+            <span className="text-xs font-medium text-slate-400">{txt.examples}</span>
             {PRESET_APPS.map((preset) => (
               <button
                 key={preset.id}
@@ -219,50 +310,50 @@ export default function UploadSection({
           {/* Context inputs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-slate-50/70 border border-slate-100">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Nom de l'application</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">{txt.appName}</label>
               <input
                 type="text"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
-                placeholder="Ex: FitPulse Pro"
+                placeholder={txt.appNamePlaceholder}
                 className="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 text-slate-900 placeholder:text-slate-300"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Audience cible</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">{txt.audience}</label>
               <input
                 type="text"
                 value={targetAudience}
                 onChange={(e) => setTargetAudience(e.target.value)}
-                placeholder="Sportifs, freelances, étudiants..."
+                placeholder={txt.audiencePlaceholder}
                 className="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 text-slate-900 placeholder:text-slate-300"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Tonalité</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">{txt.tone}</label>
               <select
                 value={tone}
                 onChange={(e) => setTone(e.target.value)}
                 className="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 text-slate-900"
               >
-                <option value="Dynamique & Inspirant">Dynamique & Inspirant</option>
-                <option value="Professionnel & Rassurant">Professionnel & Rassurant</option>
-                <option value="Audacieux & Disruptif">Audacieux & Disruptif</option>
-                <option value="Minimaliste & Zen">Minimaliste & Zen</option>
-                <option value="Accessible & Chaleureux">Accessible & Chaleureux</option>
+                <option value="Dynamique & Inspirant">{txt.tones["Dynamique & Inspirant"]}</option>
+                <option value="Professionnel & Rassurant">{txt.tones["Professionnel & Rassurant"]}</option>
+                <option value="Audacieux & Disruptif">{txt.tones["Audacieux & Disruptif"]}</option>
+                <option value="Minimaliste & Zen">{txt.tones["Minimaliste & Zen"]}</option>
+                <option value="Accessible & Chaleureux">{txt.tones["Accessible & Chaleureux"]}</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Modèle économique</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">{txt.pricing}</label>
               <select
                 value={pricingModel}
                 onChange={(e) => setPricingModel(e.target.value)}
                 className="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 text-slate-900"
               >
-                <option value="Freemium / In-App Purchases">Freemium / Achats intégrés</option>
-                <option value="Abonnement mensuel/annuel">Abonnement (SaaS / App)</option>
-                <option value="Application payante directe">Payante au téléchargement</option>
-                <option value="100% Gratuit / Open Source">100% Gratuit</option>
+                <option value="Freemium / In-App Purchases">{txt.pricingOptions["Freemium / In-App Purchases"]}</option>
+                <option value="Abonnement mensuel/annuel">{txt.pricingOptions["Abonnement mensuel/annuel"]}</option>
+                <option value="Application payante directe">{txt.pricingOptions["Application payante directe"]}</option>
+                <option value="100% Gratuit / Open Source">{txt.pricingOptions["100% Gratuit / Open Source"]}</option>
               </select>
             </div>
           </div>
@@ -274,7 +365,7 @@ export default function UploadSection({
                 <Key className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-slate-700 truncate">Moteur actif</p>
+                <p className="text-xs font-semibold text-slate-700 truncate">{txt.engine}</p>
                 <p className="text-[11px] text-slate-500 truncate">{providerDisplay}</p>
               </div>
             </div>
@@ -285,7 +376,7 @@ export default function UploadSection({
               className="shrink-0 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 rounded-lg transition-colors flex items-center gap-1.5"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Configurer</span>
+              <span>{txt.configure}</span>
             </button>
           </div>
 
@@ -294,7 +385,7 @@ export default function UploadSection({
             <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100 flex items-start gap-3 text-rose-800 text-xs">
               <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold">Une erreur est survenue</p>
+                <p className="font-semibold">{txt.errorTitle}</p>
                 <p className="mt-0.5">{error}</p>
               </div>
             </div>
@@ -314,12 +405,12 @@ export default function UploadSection({
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>{loadingStep || "Analyse en cours..."}</span>
+                <span>{loadingStep || txt.loading}</span>
               </>
             ) : (
               <>
                 <Rocket className="w-4 h-4" />
-                <span>Lancer la session marketing</span>
+                <span>{txt.cta}</span>
               </>
             )}
           </button>
@@ -329,14 +420,14 @@ export default function UploadSection({
         <div className="lg:col-span-2">
           <div className="h-full min-h-[320px] rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-5 flex flex-col">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-slate-900">Aperçu</h3>
+              <h3 className="text-sm font-semibold text-slate-900">{txt.preview}</h3>
               {images.length > 0 && (
                 <button
                   onClick={clearImages}
                   className="text-[11px] font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1"
                 >
                   <Trash2 className="w-3 h-3" />
-                  Tout effacer
+                  {txt.clear}
                 </button>
               )}
             </div>
@@ -347,7 +438,7 @@ export default function UploadSection({
                   <ImageIcon className="w-5 h-5" />
                 </div>
                 <p className="text-xs text-slate-400 max-w-[200px]">
-                  Les captures importées apparaîtront ici pour un aperçu rapide.
+                  {txt.previewEmpty}
                 </p>
               </div>
             ) : (
@@ -371,7 +462,7 @@ export default function UploadSection({
                           setModalImage(img);
                         }}
                         className="w-7 h-7 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white flex items-center justify-center transition-colors"
-                        title="Agrandir"
+                        title={txt.zoom}
                       >
                         <Eye className="w-3 h-3" />
                       </button>
@@ -382,7 +473,7 @@ export default function UploadSection({
                           removeImage(img.id);
                         }}
                         className="w-7 h-7 rounded-full bg-slate-900/80 hover:bg-rose-600 text-white flex items-center justify-center transition-colors"
-                        title="Supprimer"
+                        title={txt.remove}
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
@@ -390,7 +481,7 @@ export default function UploadSection({
 
                     <div className="absolute bottom-0 left-0 right-0 p-2.5 text-white">
                       <span className="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/20 backdrop-blur-sm mb-0.5">
-                        Écran {idx + 1}
+                        {txt.screen} {idx + 1}
                       </span>
                       <p className="text-[11px] font-medium truncate">{img.tag || img.name}</p>
                     </div>
@@ -417,7 +508,7 @@ export default function UploadSection({
                       className="hidden"
                     />
                     <Plus className="w-5 h-5 mb-1" />
-                    <span className="text-xs font-semibold">Ajouter</span>
+                    <span className="text-xs font-semibold">{txt.add}</span>
                   </button>
                 )}
               </div>

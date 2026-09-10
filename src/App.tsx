@@ -41,6 +41,51 @@ import { generateMarketingMarkdown } from "./utils/exportMarkdown";
 import { Sparkles, ArrowUp, RefreshCw, FileText, Printer, CheckCircle2, Download, Info } from "lucide-react";
 import confetti from "canvas-confetti";
 
+const UI_TEXT = {
+  fr: {
+    banner:
+      "Cette version en ligne est une vitrine interactive. Les résultats affichés sont un exemple des possibilités d'Aurea. Pour analyser votre propre projet, lancez Aurea en local.",
+    heroEyebrow: "AUREA / LAUNCH STUDIO",
+    heroTitle: "Lancez votre application avec clarté",
+    heroSubtitle: "Transformez vos écrans en une stratégie de lancement précise, lisible et prête à exécuter.",
+    heroSideLabel: "Ce que vous obtenez",
+    heroSideText: "Positionnement, messages, acquisition et feuille de route réunis dans un seul espace de travail.",
+    noImagesError: "Veuillez importer au moins une photo ou capture d'écran de l'application.",
+    loadingVisual: (provider: string) => `Analyse visuelle via ${provider}...`,
+    loadingExtraction: "Extraction de l'UX, des fonctionnalités et des couleurs...",
+    loadingDrafting: "Rédaction des fiches App Store, posts et angles publicitaires...",
+    analysisFailed: "Échec de l'analyse marketing.",
+    sessionReady: (name: string) => `Session Marketing prête : ${name}`,
+    modulesSubtitle: "15 modules stratégiques d'élite, UGC, benchmarks concurrents, simulateur CAC/LTV & objectifs OKR 30J",
+    exportCenter: "Centre d'Exportation (PDF, CSV, Notion)",
+    print: "Imprimer",
+    regenerate: "Régénérer",
+    projectAuditError: "Erreur d'audit projet.",
+    projectTestError: "Erreur de test du projet.",
+  },
+  en: {
+    banner:
+      "This online version is an interactive showcase. The results shown are an example of Aurea's capabilities. To analyze your own project, run Aurea locally.",
+    heroEyebrow: "AUREA / LAUNCH STUDIO",
+    heroTitle: "Launch your application with clarity",
+    heroSubtitle: "Turn your screens into a precise, readable launch strategy ready to execute.",
+    heroSideLabel: "What you get",
+    heroSideText: "Positioning, messaging, acquisition and roadmap combined in a single workspace.",
+    noImagesError: "Please upload at least one photo or screenshot of the application.",
+    loadingVisual: (provider: string) => `Visual analysis via ${provider}...`,
+    loadingExtraction: "Extracting UX, features, and colors...",
+    loadingDrafting: "Drafting App Store listings, posts, and ad angles...",
+    analysisFailed: "Marketing analysis failed.",
+    sessionReady: (name: string) => `Marketing session ready: ${name}`,
+    modulesSubtitle: "15 elite strategic modules, UGC, competitor benchmarks, CAC/LTV simulator & 30-day OKRs",
+    exportCenter: "Export Center (PDF, CSV, Notion)",
+    print: "Print",
+    regenerate: "Regenerate",
+    projectAuditError: "Project audit error.",
+    projectTestError: "Project test error.",
+  },
+};
+
 const DEFAULT_ENGINE_CONFIG: EngineConfig = {
   provider: "gemini",
   apiKey: "",
@@ -55,7 +100,7 @@ export default function App() {
   const [appName, setAppName] = useState(defaultPreset.name);
   const [targetAudience, setTargetAudience] = useState(defaultPreset.audience);
   const [tone, setTone] = useState("Dynamique & Inspirant");
-  const [pricingModel, setPricingModel] = useState("Freemium / Abonnement");
+  const [pricingModel, setPricingModel] = useState("Freemium / In-App Purchases");
   const [language, setLanguage] = useState<"fr" | "en">("fr");
   const [isExportHubOpen, setIsExportHubOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
@@ -113,9 +158,11 @@ export default function App() {
     content: null,
   });
 
+  const ui = UI_TEXT[language];
+
   const handleGenerate = async () => {
     if (images.length === 0) {
-      setError("Veuillez importer au moins une photo ou capture d'écran de l'application.");
+      setError(ui.noImagesError);
       return;
     }
 
@@ -124,13 +171,13 @@ export default function App() {
     const providerName = 
       engineConfig.provider === "openai" ? "OpenAI" :
       engineConfig.provider === "anthropic" ? "Anthropic" :
-      engineConfig.provider === "custom" ? "Moteur personnalisé" : "Google";
-    setLoadingStep(`Analyse visuelle via ${providerName}...`);
+      engineConfig.provider === "custom" ? (language === "en" ? "Custom engine" : "Moteur personnalisé") : "Google";
+    setLoadingStep(ui.loadingVisual(providerName));
 
     try {
       // Simulate step transitions for smooth UX
-      const timer1 = setTimeout(() => setLoadingStep("Extraction de l'UX, des fonctionnalités et des couleurs..."), 2000);
-      const timer2 = setTimeout(() => setLoadingStep("Rédaction des fiches App Store, posts et angles publicitaires..."), 4500);
+      const timer1 = setTimeout(() => setLoadingStep(ui.loadingExtraction), 2000);
+      const timer2 = setTimeout(() => setLoadingStep(ui.loadingDrafting), 4500);
 
       if (import.meta.env.PROD) {
         await new Promise((resolve) => setTimeout(resolve, 2800));
@@ -142,7 +189,9 @@ export default function App() {
             detectedName: demoName,
             uniqueValueProposition: demoName === DEMO_APP_NAME
               ? DEMO_SESSION.appOverview.uniqueValueProposition
-              : `${demoName} simplifie votre quotidien avec une expérience fluide, personnelle et sans friction.`,
+              : (language === "en"
+                  ? `${demoName} simplifies your daily life with a smooth, personal, frictionless experience.`
+                  : `${demoName} simplifie votre quotidien avec une expérience fluide, personnelle et sans friction.`),
           },
         };
         clearTimeout(timer1);
@@ -171,7 +220,7 @@ export default function App() {
 
         const data = await parseApiResponse(res);
         if (!res.ok || !data.success) {
-          throw new Error(data.error || "Échec de l'analyse marketing.");
+          throw new Error(data.error || ui.analysisFailed);
         }
 
         setSession(data.session);
@@ -194,7 +243,7 @@ export default function App() {
       } catch {}
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Une erreur est survenue lors de la communication avec le moteur.");
+      setError(err.message || (language === "en" ? "An error occurred while communicating with the engine." : "Une erreur est survenue lors de la communication avec le moteur."));
     } finally {
       setIsLoading(false);
       setLoadingStep("");
@@ -302,7 +351,7 @@ export default function App() {
       });
       const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
-        throw new Error(data.error || "Échec de l'audit projet.");
+        throw new Error(data.error || ui.projectAuditError);
       }
       setProjectAudit(data.audit);
       setTimeout(() => {
@@ -311,7 +360,7 @@ export default function App() {
       }, 100);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Erreur lors de l'audit du projet.");
+      setError(err.message || ui.projectAuditError);
     } finally {
       setIsProjectAuditLoading(false);
     }
@@ -329,7 +378,7 @@ export default function App() {
       });
       const data = await parseApiResponse(res);
       if (!res.ok || !data.success) {
-        throw new Error(data.error || "Échec des tests projet.");
+        throw new Error(data.error || ui.projectTestError);
       }
       setProjectTestResult(data.result);
       setTimeout(() => {
@@ -338,7 +387,7 @@ export default function App() {
       }, 100);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Erreur lors des tests du projet.");
+      setError(err.message || ui.projectTestError);
     } finally {
       setIsProjectTestLoading(false);
     }
@@ -364,7 +413,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-2 text-xs text-amber-800 text-center">
           <Info className="w-3.5 h-3.5 flex-shrink-0" />
           <span>
-            Cette version en ligne est une <strong>vitrine interactive</strong>. Les résultats affichés sont un exemple des possibilités d'Aurea. Pour analyser votre propre projet, lancez Aurea en local.
+            {ui.banner}
           </span>
         </div>
       </div>
@@ -374,17 +423,17 @@ export default function App() {
         {/* Page Header */}
         <div className="mb-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
           <div>
-            <div className="mb-5 flex items-center gap-3"><span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent)]">AUREA / LAUNCH STUDIO</span><span className="h-px w-12 bg-[var(--color-accent)]/40" /></div>
+            <div className="mb-5 flex items-center gap-3"><span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[var(--color-accent)]">{ui.heroEyebrow}</span><span className="h-px w-12 bg-[var(--color-accent)]/40" /></div>
             <h1 className="max-w-4xl font-serif text-5xl sm:text-6xl lg:text-[5.3rem] font-normal text-[var(--color-text)] tracking-tight leading-[0.98]">
-              Lancez votre application avec clarté
+              {ui.heroTitle}
             </h1>
             <p className="text-base text-slate-500 mt-6 max-w-2xl leading-relaxed">
-              Transformez vos écrans en une stratégie de lancement précise, lisible et prête à exécuter.
+              {ui.heroSubtitle}
             </p>
           </div>
           <div className="hidden lg:block border-l border-[var(--color-border-strong)] pl-5 pb-1">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">Ce que vous obtenez</p>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">Positionnement, messages, acquisition et feuille de route réunis dans un seul espace de travail.</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">{ui.heroSideLabel}</p>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{ui.heroSideText}</p>
           </div>
         </div>
 
@@ -406,6 +455,7 @@ export default function App() {
           onGenerate={handleGenerate}
           engineConfig={engineConfig}
           onOpenEngineSettings={() => setIsEngineSettingsOpen(true)}
+          language={language}
         />
 
         {/* Project Folder Audit */}
@@ -443,10 +493,10 @@ export default function App() {
                 </div>
                 <div>
                   <h2 className="text-base font-bold">
-                    Session Marketing prête : {session.appOverview?.detectedName || appName || "Application"}
+                    {ui.sessionReady(session.appOverview?.detectedName || appName || (language === "en" ? "Application" : "Application"))}
                   </h2>
                   <p className="text-xs text-slate-300">
-                    15 modules stratégiques d'élite, UGC, benchmarks concurrents, simulateur CAC/LTV & objectifs OKR 30J
+                    {ui.modulesSubtitle}
                   </p>
                 </div>
               </div>
@@ -458,14 +508,14 @@ export default function App() {
                   className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Centre d'Exportation (PDF, CSV, Notion)</span>
+                  <span>{ui.exportCenter}</span>
                 </button>
                 <button
                   onClick={handlePrint}
                   className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>Imprimer</span>
+                  <span>{ui.print}</span>
                 </button>
                 <button
                   onClick={handleGenerate}
@@ -473,13 +523,13 @@ export default function App() {
                   className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Régénérer</span>
+                  <span>{ui.regenerate}</span>
                 </button>
               </div>
             </div>
 
             {/* Sticky Navigation Pills Bar */}
-            <ModuleNavBar />
+            <ModuleNavBar language={language} />
 
             {/* Modules 1 to 14 */}
             {session.appOverview && (
