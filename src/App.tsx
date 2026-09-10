@@ -38,7 +38,7 @@ import { SimulatorGrowthInputs } from "./utils/okrDefaults";
 import { PRESET_APPS } from "./data/presets";
 import { DEMO_SESSION, DEMO_APP_NAME } from "./data/demoSession";
 import { generateMarketingMarkdown } from "./utils/exportMarkdown";
-import { Sparkles, ArrowUp, RefreshCw, FileText, Printer, CheckCircle2, Download } from "lucide-react";
+import { Sparkles, ArrowUp, RefreshCw, FileText, Printer, CheckCircle2, Download, Info } from "lucide-react";
 import confetti from "canvas-confetti";
 
 const DEFAULT_ENGINE_CONFIG: EngineConfig = {
@@ -358,6 +358,16 @@ export default function App() {
         onOpenHistory={() => setIsHistoryOpen(true)}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
+
+      {/* Showcase / demo banner */}
+      <div className="bg-amber-50 border-b border-amber-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-2 text-xs text-amber-800 text-center">
+          <Info className="w-3.5 h-3.5 flex-shrink-0" />
+          <span>
+            Cette version en ligne est une <strong>vitrine interactive</strong>. Les résultats affichés sont un exemple des possibilités d'Aurea. Pour analyser votre propre projet, lancez Aurea en local.
+          </span>
+        </div>
+      </div>
 
       {/* Main Container */}
       <main className="grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
