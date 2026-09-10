@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aurea — Studio de lancement pour applications</title>
+    <meta name="description" content="Aurea analyse vos captures d'écran et votre code pour vous aider à lancer votre application : ASO, scripts UGC, benchmarks concurrentiels, simulateur CAC/LTV, audit projet et exports PDF/CSV." />
+    <meta property="og:title" content="Aurea — Studio de lancement pour applications" />
+    <meta property="og:description" content="Aurea analyse vos captures d'écran et votre code pour vous aider à lancer votre application : ASO, scripts UGC, benchmarks concurrentiels, simulateur CAC/LTV, audit projet et exports PDF/CSV." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="icon" type="image/svg+xml" href="/aurea-icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/aurea-icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

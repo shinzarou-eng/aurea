@@ -1,0 +1,140 @@
+import { MarketingSession, RetentionSequencePlan, PushNotificationItem, OnboardingEmailItem } from "../types";
+
+export function generateDefaultRetentionPlan(session: Partial<MarketingSession>): RetentionSequencePlan {
+  const appName = session.appOverview?.detectedName || "Votre Application";
+  const usp = session.appOverview?.uniqueValueProposition || "Simplifiez votre quotidien et atteignez vos objectifs.";
+  const painPoint = session.targetPersonas?.[0]?.corePainPoint || "La perte de temps et le manque d'organisation";
+  const primaryFeature = session.appOverview?.primaryFeaturesDetected?.[0] || "notre outil intelligent";
+
+  const pushNotifications: PushNotificationItem[] = [
+    {
+      id: "push-j0",
+      triggerTiming: "J+0 (10 min après installation)",
+      dayOffset: 0,
+      category: "activation",
+      title: `🎉 Bienvenue sur ${appName} !`,
+      body: `Votre premier pas prend moins de 60 secondes. Configurez ${primaryFeature} maintenant pour voir les premiers résultats.`,
+      sound: "default",
+      badgeCount: 1,
+      actionButton: "Commencer",
+      recommendedTimeOfDay: "Immédiat",
+      goal: "Déclencher l'activation initiale (Aha! Moment) avant que l'utilisateur n'oublie l'application.",
+    },
+    {
+      id: "push-j1",
+      triggerTiming: "J+1 (Matin 09:00)",
+      dayOffset: 1,
+      category: "habit",
+      title: "⚡ La minute magique du matin",
+      body: `Évitez ${painPoint.toLowerCase()}. Prenez 1 minute pour calibrer votre journée avec ${appName}.`,
+      sound: "chime",
+      badgeCount: 1,
+      actionButton: "Ouvrir",
+      recommendedTimeOfDay: "09:00",
+      goal: "Ancrer l'habitude quotidienne dans la routine matinale.",
+    },
+    {
+      id: "push-j3",
+      triggerTiming: "J+3 (Fin d'après-midi 18:30)",
+      dayOffset: 3,
+      category: "paywall",
+      title: "⏳ Votre essai gratuit est actif",
+      body: `Débloquez 100% de la puissance de ${appName}. Profitez des fonctionnalités Pro sans engagement.`,
+      sound: "default",
+      badgeCount: 2,
+      actionButton: "Découvrir Pro",
+      recommendedTimeOfDay: "18:30",
+      goal: "Éveiller l'intérêt pour l'offre paywall avant la fin de la période d'essai.",
+    },
+    {
+      id: "push-j7",
+      triggerTiming: "J+7 (Midi 12:15)",
+      dayOffset: 7,
+      category: "retention",
+      title: "🏆 Bilan de votre 1ère semaine !",
+      body: "Bravo pour votre constance ! Découvrez votre récapitulatif hebdomadaire et vos métriques clés.",
+      sound: "fanfare",
+      badgeCount: 1,
+      actionButton: "Voir mon bilan",
+      recommendedTimeOfDay: "12:15",
+      goal: "Valoriser l'effort de l'utilisateur (gamification) pour consolider la rétention D7.",
+    },
+    {
+      id: "push-j14",
+      triggerTiming: "J+14 (Soirée 20:00)",
+      dayOffset: 14,
+      category: "habit",
+      title: "💡 Astuce secrète débloquée",
+      body: `Saviez-vous que vous pouvez automatiser ${primaryFeature} ? Gagnez encore plus de temps dès ce soir.`,
+      sound: "default",
+      badgeCount: 1,
+      actionButton: "Découvrir l'astuce",
+      recommendedTimeOfDay: "20:00",
+      goal: "Découverte de fonctionnalités avancées pour les utilisateurs réguliers (Power Users).",
+    },
+    {
+      id: "push-j30",
+      triggerTiming: "J+30 (Matin 10:00)",
+      dayOffset: 30,
+      category: "winback",
+      title: "🎁 Un mois ensemble : votre cadeau",
+      body: `Partagez ${appName} avec un ami et gagnez 1 mois d'accès Pro offert pour vous deux.`,
+      sound: "default",
+      badgeCount: 1,
+      actionButton: "Inviter un ami",
+      recommendedTimeOfDay: "10:00",
+      goal: "Boucle de parrainage viral et réduction drastique du churn D30.",
+    },
+  ];
+
+  const emails: OnboardingEmailItem[] = [
+    {
+      id: "email-j0",
+      triggerTiming: "J+0 (Immédiat après inscription)",
+      subject: `Bienvenue dans l'aventure ${appName} 🚀`,
+      previewText: `Voici comment tirer le maximum de ${appName} en 3 minutes chrono.`,
+      senderName: `L'équipe ${appName}`,
+      heading: `Ravi de vous compter parmi nous !`,
+      bodyMarkdown: `Bonjour,\n\nMerci d'avoir téléchargé **${appName}**.\n\nNotre mission est claire : **${usp}**.\n\n### 3 étapes simples pour démarrer aujourd'hui :\n1. **Activez les notifications** pour recevoir vos rappels sans effort.\n2. **Testez ${primaryFeature}** dès votre première session.\n3. **Définissez votre objectif personnel** pour mesurer vos progrès.\n\nSi vous avez la moindre question ou suggestion, répondez directement à cet email. Nous lisons chaque message !\n\nÀ très vite,\n*L'équipe ${appName}*`,
+      ctaText: `Ouvrir ${appName} et démarrer`,
+      ctaUrlPlaceholder: "myapp://onboarding",
+      goal: "Établir un lien humain direct et guider l'utilisateur vers son premier accomplissement.",
+    },
+    {
+      id: "email-j2",
+      triggerTiming: "J+2 (Matin)",
+      subject: `L'erreur que font 80% des utilisateurs (et comment l'éviter)`,
+      previewText: `Un conseil rapide pour éliminer ${painPoint.toLowerCase()}.`,
+      senderName: `Fondateur de ${appName}`,
+      heading: `Le raccourci pour aller 2x plus vite`,
+      bodyMarkdown: `Bonjour,\n\nQuand on commence à utiliser une nouvelle application, le piège le plus fréquent est de vouloir tout configurer d'un coup.\n\nAvec **${appName}**, commencez petit : réservez **60 secondes par jour** pour vérifier votre tableau de bord.\n\nCeux qui suivent cette méthode ont **4x plus de chances** d'atteindre leurs objectifs au bout d'un mois.\n\nPrêt pour votre session du jour ?`,
+      ctaText: `Faire ma session de 60 secondes`,
+      ctaUrlPlaceholder: "myapp://quick-check",
+      goal: "Déconstruire la surcharge cognitive et encourager la micro-action quotidienne.",
+    },
+    {
+      id: "email-j5",
+      triggerTiming: "J+5 (Fin de journée)",
+      subject: `Transparence totale : fin de votre essai gratuit dans 48h`,
+      previewText: `Aucune mauvaise surprise : voici comment gérer votre abonnement ${appName}.`,
+      senderName: `Support ${appName}`,
+      heading: `Votre tranquillité d'esprit avant tout`,
+      bodyMarkdown: `Bonjour,\n\nVotre période d'essai gratuit de **${appName} Pro** se termine dans 48 heures.\n\nNous tenons à vous prévenir en toute transparence :\n- Si vous adorez l'application, vous n'avez rien à faire : vos fonctionnalités avancées restent actives.\n- Si vous préférez rester sur la version gratuite, vous pouvez annuler en 1 clic dans les réglages de votre compte sans le moindre frais.\n\nMerci de votre confiance !`,
+      ctaText: `Gérer mon compte & abonnement`,
+      ctaUrlPlaceholder: "myapp://settings/subscription",
+      goal: "Bâtir une confiance absolue par la transparence (réduit le churn involontaire et les avis 1 étoile).",
+    },
+  ];
+
+  return {
+    pushNotifications,
+    emails,
+    strategySummary: `Stratégie de rétention multi-canaux combinant micro-rappels contextuels sur écran de verrouillage et emails de fondation. L'objectif est d'atteindre une rétention D7 supérieure à 35% et un taux de conversion paywall de 8%+.`,
+    bestPracticesTips: [
+      "Personnalisez les heures d'envoi en fonction du fuseau horaire de l'utilisateur.",
+      "N'envoyez jamais plus d'une notification push non sollicitée par jour au-delà de J+3.",
+      "Intégrez toujours des deep-links pointant vers l'écran précis mentionné dans le message.",
+      "Proposez un bouton de désinscription transparent dans tous les emails marketing.",
+    ],
+  };
+}
